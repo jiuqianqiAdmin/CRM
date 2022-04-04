@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoNode.crm.settings.dao.UserDao">
+    <update id="update">
+        update tbl_user set
+        loginAct=#{loginAct},
+        name=#{name},
+        loginPwd=#{loginPwd},
+        email=#{email},
+        expireTime=#{expireTime},
+        lockState=#{lockState},
+        deptno=#{deptno},
+        allowIps=#{allowIps},
+        createTime=#{createTime},
+        createBy=#{createBy},
+        editTime=#{editTime},
+        editBy=#{editBy}
+        where id=#{id}
+
+    </update>
+    <select id="detail" resultType="User">
+        select * from tbl_user  where id=#{id}
+    </select>
+    <delete id="delete">
+    delete from tbl_user where id in
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+    </delete>
+
+    <insert id="save">
+        insert into tbl_user
+        (
+        id,
+        loginAct,
+        name,
+        loginPwd,
+        email,
+        expireTime,
+        lockState,
+        deptno,
+        allowIps,
+        createTime,
+        createBy
+        )
+        values
+        (
+        #{id},
+        #{loginAct},
+        #{name},
+        #{loginPwd},
+        #{email},
+        #{expireTime},
+        #{lockState},
+        #{deptno},
+        #{allowIps},
+        #{createTime},
+        #{createBy}
+        )
+    </insert>
+    <select id="getUserByCondition" resultType="User">
+        select
+        u.id,
+        u.loginAct,
+        u.name,
+        u.email,
+        u.expireTime,
+        u.lockState,
+        d.deptName as deptno,
+        u.allowIps,
+        u.createTime,
+        u.createBy,
+        u.editTime,
+        u.editBy
+        from tbl_user u left join tbl_dept d on u.deptno=d.deptno
+        <where>
+            <if test="name!=null and name!=''">
+                u.name like '%' #{name} '%'
+            </if>
+            <if test="deptName!=null and deptName!=''">
+                and  d.deptname like '%' #{deptName} '%'
+            </if>
+            <if test="lockState!=null and lockState!=''">
+                and u.lockState=#{lockState}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and u.expireTime &gt; #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and u.expireTime &lt; #{endTime}
+            </if>
+        </where>
+        order by u.createTime desc
+        limit #{skipCount},#{pageSize}
+    </select>
+    <select id="getTotalByCondition" resultType="int">
+        select count(*) from tbl_user u left join tbl_dept d on u.deptno=d.deptno
+        <where>
+            <if test="name!=null and name!=''">
+                u.name like '%' #{name} '%'
+            </if>
+            <if test="deptName!=null and deptName!=''">
+              and  d.deptname like '%' #{deptName} '%'
+            </if>
+            <if test="lockState!=null and lockState!=''">
+                and u.lockState=#{lockState}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and u.expireTime &gt; #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and u.expireTime &lt; #{endTime}
+            </if>
+        </where>
+    </select>
+    <update id="updatePwd">
+        update  tbl_user set loginPwd=#{newPwd} where id=#{id}
+    </update>
+    <select id="searchPwd" resultType="String">
+        select loginPwd from tbl_user where id=#{id}
+    </select>
+    <select id="login" resultType="user">
+        select
+         u.id,
+         u.loginAct,
+         u.name,
+         u.email,
+         u.expireTime,
+         u.lockState,
+         d.deptname as deptno,
+         u.allowIps,
+         u.createTime,
+         u.createBy,
+         u.editTime,
+         u.editBy
+         from tbl_user u
+         left join tbl_dept d on u.deptno= d.deptno
+         where u.loginAct=#{loginAct} and u.loginPwd=#{loginPwd}
+    </select>
+
+    <select id="getUserList" resultType="User">
+        select * from tbl_user
+    </select>
+</mapper>

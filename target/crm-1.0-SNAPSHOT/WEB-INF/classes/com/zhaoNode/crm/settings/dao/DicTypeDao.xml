@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoNode.crm.settings.dao.DicTypeDao">
+    <delete id="delete">
+        delete from tbl_dic_type where code in
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+        #{aid}
+    </foreach>
+    </delete>
+    <update id="update">
+        update tbl_dic_type set
+        code=#{code},
+        name=#{name},
+        description=#{description}
+        where code=#{id}
+
+    </update>
+    <select id="edit" resultType="DicType">
+        select * from tbl_dic_type where code=#{id}
+    </select>
+    <insert id="save">
+        insert into tbl_dic_type
+        (
+         code,
+         name,
+         description
+        ) values
+        (
+        #{code},
+        #{name},
+        #{description}
+        )
+    </insert>
+
+    <select id="getDicTypeByCondition" resultType="DicType">
+        select  * from tbl_dic_type  limit #{skipCount},#{pageSize}
+    </select>
+    <select id="getTotalByCondition" resultType="int">
+        select  count(*) from tbl_dic_type
+    </select>
+    <select id="getTypeList" resultType="DicType">
+        select * from tbl_dic_type
+    </select>
+</mapper>
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoNode.crm.settings.dao.DicValueDao">
+    <delete id="delete">
+        delete from tbl_dic_value where id in
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+    </delete>
+    <update id="update">
+        update tbl_dic_value set
+        value=#{value},
+        text=#{text},
+        orderNo=#{orderNo},
+        typeCode=#{typeCode}
+        where id=#{id}
+    </update>
+    <select id="edit" resultType="DicValue">
+        select * from tbl_dic_value where id=#{id}
+    </select>
+    <insert id="save">
+        insert into tbl_dic_value (
+         id,
+         value,
+         text,
+         orderNo,
+         typeCode
+        ) values (
+        #{id},
+        #{value},
+        #{text},
+        #{orderNo},
+        #{typeCode}
+        )
+    </insert>
+    <select id="getDicValueByCondition" resultType="DicValue">
+         select * from tbl_dic_value  order by orderNo limit #{skipCount},#{pageSize}
+    </select>
+    <select id="getTotalByCondition" resultType="int">
+        select count(*) from tbl_dic_value
+    </select>
+    <select id="getValueByCode" resultType="DicValue">
+        select * from tbl_dic_value where typeCode=#{code} order by orderNo
+    </select>
+</mapper>
+

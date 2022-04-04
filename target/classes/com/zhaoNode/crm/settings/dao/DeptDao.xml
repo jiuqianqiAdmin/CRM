@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaoNode.crm.settings.dao.DeptDao">
+    <delete id="delete">
+        delete from tbl_dept where id in
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+    </delete>
+    <update id="update">
+        update tbl_dept set
+         deptno=#{deptno},
+         deptname=#{deptname},
+         principal=#{principal},
+         phone=#{phone},
+         description=#{description},
+         editBy=#{editBy},
+         editTime=#{editTime}
+         where id=#{id}
+    </update>
+    <select id="editDept" resultType="Dept">
+        select * from tbl_dept where id=#{id}
+    </select>
+    <insert id="save">
+        insert into tbl_dept (
+        id,
+        deptno,
+        deptname,
+        principal,
+        phone,
+        description,
+        createBy,
+        createTime
+        ) values (
+        #{id},
+        #{deptno},
+        #{deptname},
+        #{principal},
+        #{phone},
+        #{description},
+        #{createBy},
+        #{createTime}
+        )
+    </insert>
+    <select id="getDeptByCondition" resultType="Dept">
+        select  * from tbl_dept   order by createTime desc limit #{skipCount},#{pageSize}
+    </select>
+    <select id="getTotalByCondition" resultType="int">
+        select count(*) from tbl_dept
+    </select>
+    <select id="getAll" resultType="Dept">
+        select * from tbl_dept
+    </select>
+</mapper>
+

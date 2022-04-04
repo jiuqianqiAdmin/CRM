@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhaoNode.crm.workbench.dao.ClueActivityRelationDao">
+    <select id="getActivityIdByClueId" resultType="ClueActivityRelation">
+        select * from tbl_clue_activity_relation where clueid=#{clueId}
+    </select>
+	<delete id="deleteActivityRelationById">
+        delete from tbl_clue_activity_relation where id=#{id}
+    </delete>
+    <insert id="saveActivityRelationBYActivityIdAndClueId">
+        insert into tbl_clue_activity_relation (id,clueid,activityid) values (#{id},#{clueId},#{activityId})
+    </insert>
+    <select id="getClueRelationByArr" resultType="int">
+        select count(*) from tbl_clue_activity_relation where clueid in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <delete id="deleteClueRelationByClueIdArr">
+        delete from tbl_clue_activity_relation where clueid in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

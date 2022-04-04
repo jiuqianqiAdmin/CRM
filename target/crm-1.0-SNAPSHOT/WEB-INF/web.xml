@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>crm</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <!--过滤器过滤非初始页面和无session对象的访问-->
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.zhaoNode.crm.web.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <!--过滤字符编码问题-->
+<filter>
+  <filter-name>EncodingFilter</filter-name>
+  <filter-class>com.zhaoNode.crm.web.filter.EncodingFilter</filter-class>
+</filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <!--监听器在服务器启动时传递数据字典-->
+  <listener>
+    <listener-class>com.zhaoNode.crm.web.listener.SysInitListener</listener-class>
+  </listener>
+  <!--设置模块-->
+  <servlet>
+    <servlet-name>UserController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.settings.web.controller.UserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserController</servlet-name>
+    <url-pattern>/settings/user/login.do</url-pattern>
+    <url-pattern>/settings/user/updatePwd.do</url-pattern>
+    <url-pattern>/settings/user/pageList.do</url-pattern>
+    <url-pattern>/settings/user/saveUser.do</url-pattern>
+    <url-pattern>/settings/user/deleteUserById.do</url-pattern>
+    <url-pattern>/settings/user/detail.do</url-pattern>
+    <url-pattern>/settings/user/updateUser.do</url-pattern>
+  </servlet-mapping>
+  <!--部门模块-->
+  <servlet>
+    <servlet-name>DeptController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.settings.web.controller.DeptController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeptController</servlet-name>
+    <url-pattern>/settings/dept/pageList.do</url-pattern>
+    <url-pattern>/settings/dept/saveDept.do</url-pattern>
+    <url-pattern>/settings/dept/editDept.do</url-pattern>
+    <url-pattern>/settings/dept/updateDept.do</url-pattern>
+    <url-pattern>/settings/dept/deleteDeptById.do</url-pattern>
+  </servlet-mapping>
+  <!--数据字典-->
+  <servlet>
+    <servlet-name>DicTypeController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.settings.web.controller.DicTypeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DicTypeController</servlet-name>
+    <url-pattern>/settings/dicType/pageList.do</url-pattern>
+    <url-pattern>/settings/dicType/saveDicType.dop</url-pattern>
+    <url-pattern>/settings/dicType/edit.do</url-pattern>
+    <url-pattern>/settings/dicType/updateDicType.do</url-pattern>
+    <url-pattern>/settings/dicType/deleteDicType.do</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DicValueController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.settings.web.controller.DicValueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DicValueController</servlet-name>
+    <url-pattern>/settings/dicValue/pageList.do</url-pattern>
+    <url-pattern>/settings/dicValue/saveDicValue.do</url-pattern>
+    <url-pattern>/settings/dicValue/edit.do</url-pattern>
+    <url-pattern>/settings/dicValue/updateDicValue.do</url-pattern>
+    <url-pattern>/settings/dicValue/deleteDicValue.do</url-pattern>
+  </servlet-mapping>
+  <!--市场活动模块-->
+  <servlet>
+    <servlet-name>ActivityController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.workbench.web.controller.ActivityController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/getUserList.do</url-pattern>
+    <url-pattern>/workbench/activity/save.do</url-pattern>
+    <url-pattern>/workbench/activity/pageList.do</url-pattern>
+    <url-pattern>/workbench/activity/delete.do</url-pattern>
+    <url-pattern>/workbench/activity/getUserListAndActivity.do</url-pattern>
+    <url-pattern>/workbench/activity/update.do</url-pattern>
+    <url-pattern>/workbench/activity/detail.do</url-pattern>
+    <url-pattern>/workbench/activity/getRemarkListByAid.do</url-pattern>
+    <url-pattern>/workbench/activity/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/activity/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/chart/activity/showActivityChart.do</url-pattern>
+  </servlet-mapping>
+  <!--线索模块-->
+  <servlet>
+    <servlet-name>ClueController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.workbench.web.controller.ClueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/getUserList.do</url-pattern>
+    <url-pattern>/workbench/clue/save.do</url-pattern>
+    <url-pattern>/workbench/clue/pageList.do</url-pattern>
+    <url-pattern>/workbench/clue/detail.do</url-pattern>
+    <url-pattern>/workbench/clue/showActivityList.do</url-pattern>
+    <url-pattern>/workbench/clue/deleteActivityRelationById</url-pattern>
+    <url-pattern>/workbench/clue/searchActivityBYNameAndClueId.do</url-pattern>
+    <url-pattern>/workbench/clue/saveActivityRelationBYActivityIdAndClueId.do</url-pattern>
+    <url-pattern>/workbench/clue/searchActivityByName.do</url-pattern>
+    <url-pattern>/workbench/activity/getUserListAndClue.do</url-pattern>
+    <url-pattern>/workbench/clue/updateClue.do</url-pattern>
+    <url-pattern>/workbench/clue/deleteClueById.do</url-pattern>
+    <url-pattern>/workbench/clue/convert.do</url-pattern>
+    <url-pattern>/workbench/chart/Clue/showClueChart.do</url-pattern>
+  </servlet-mapping>
+  <!--交易模块-->
+  <servlet>
+    <servlet-name>TranController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.workbench.web.controller.TranController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TranController</servlet-name>
+    <url-pattern>/workbench/transaction/getUserList.do</url-pattern>
+    <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+    <url-pattern>/workbench/transaction/save.do</url-pattern>
+    <url-pattern>/workbench/transaction/searchActivityBYName.do</url-pattern>
+    <url-pattern>/workbench/transaction/searchContactsBYName.do</url-pattern>
+    <url-pattern>/workbench/transaction/pageList.do</url-pattern>
+    <url-pattern>/workbench/transaction/detail.do</url-pattern>
+    <url-pattern>/workbench/transaction/showTranHistory.do</url-pattern>
+    <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
+    <url-pattern>/workbench/chart/transaction/showTranChart.do</url-pattern>
+    <url-pattern>/workbench/transaction/getUserListAndTran.do</url-pattern>
+    <url-pattern>/workbench/transaction/update.do</url-pattern>
+    <url-pattern>/workbench/transaction/deleteTranById.do</url-pattern>
+  </servlet-mapping>
+
+  <!--客户模块-->
+  <servlet>
+    <servlet-name>CustomerController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.workbench.web.controller.CustomerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CustomerController</servlet-name>
+    <url-pattern>/workbench/customer/getUserList.do</url-pattern>
+    <url-pattern>/workbench/customer/saveCustomer.do</url-pattern>
+    <url-pattern>/workbench/customer/pageList.do</url-pattern>
+    <url-pattern>/workbench/customer/getUserListAndCustomer.do</url-pattern>
+    <url-pattern>/workbench/customer/updateCustomer.do</url-pattern>
+    <url-pattern>/workbench/customer/deleteCustomerById.do</url-pattern>
+    <url-pattern>/workbench/customer/detail.do</url-pattern>
+    <url-pattern>/workbench/customer/showTranRelation.do</url-pattern>
+    <url-pattern>/workbench/customer/showContacts.do</url-pattern>
+    <url-pattern>/workbench/customer/deleteCustomerRelationContacts.do</url-pattern>
+
+  </servlet-mapping>
+  <!--联系人模块-->
+  <servlet>
+    <servlet-name>ContactsController</servlet-name>
+    <servlet-class>com.zhaoNode.crm.workbench.web.controller.ContactsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactsController</servlet-name>
+    <url-pattern>/workbench/contacts/pageList.do</url-pattern>
+    <url-pattern>/workbench/contacts/getUserList.do</url-pattern>
+    <url-pattern>/workbench/contacts/getCustomerName.do</url-pattern>
+    <url-pattern>/workbench/contacts/saveContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/getUserListAndContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/updateContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/detail.do</url-pattern>
+    <url-pattern>/workbench/contacts/showTran.do</url-pattern>
+    <url-pattern>/workbench/contacts/searchActivityBYNameAndByContactsId.do</url-pattern>
+    <url-pattern>/workbench/contacts/activityRelationContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/showActivityList.do</url-pattern>
+    <url-pattern>/workbench/contacts/deleteActivityRelationContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/deleteTranRelationContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/delete.do</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
